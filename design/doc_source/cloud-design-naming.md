@@ -32,8 +32,9 @@
 * 目的（use）
     * ログ保管用、静的コンテンツ配信用など(log/contents)
 
+
 |AWSリソース|命名規則|備考|
-|---|---|---|---|
+|---|---|---|
 |VPC|{sysname}-{env}-vpc||
 |Subnet|{sysname}-{env}-{nlayer}-subnetXX|XXは連番、AZ毎に分ける|
 |RouteTable|{sysname}-{env}-{nlayer}-rtb|NatGawatayをAZ毎に分ける場合はprotectedのみ連番を付与|
