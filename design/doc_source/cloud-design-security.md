@@ -125,12 +125,23 @@ EC2 にはウィルス/マルウェア対策ソフトウェアを導入する。
 |変更監視|オン|監視するディレクトリを指定する|
 |セキュリティログ監視|オン||
 
-## 脆弱性チェック
+
+
+## セキュリティを強化する AWS サービス
+`Identify(同一性保持) → Protect(防御) → Detect(検知) → Investigate(調査)・Respond(対応) → Recover(復旧)`  
+
+![AWS Services that enhance security investigation](aws_services_that_enhance_security_investigations.jpg)  
+
+### Config(Identify)
+[構成管理](cloud-design-configurationmanagement.md) に記載。  
+
+
+### 脆弱性チェック(Protect)
 コンピュートリソースに対して脆弱性のチェックを行う。  
 システムを堅牢に保つために脆弱性チェックは定期的に行う。  
 
-### EC2
-EC2 は  Inspector で静寂性チェックを行う。  
+#### EC2
+EC2 は  Inspector で脆弱性チェックを行う。  
 Inspectorでチェックする脆弱性は以下の通り。  
 
 |ルール|説明|
@@ -143,13 +154,13 @@ Inspectorでチェックする脆弱性は以下の通り。
 各ルールの詳細は AWS ドキュメントに記載がある。  
 [Amazon Inspector のルール パッケージとルール](https://docs.aws.amazon.com/ja_jp/inspector/latest/userguide/inspector_rule-packages.html)
 
-### ECR
+#### ECR
 ECR リポジトリにプッシュされたイメージに対してスキャンを実施する。  
 
 スキャンの詳細は AWS ドキュメントに記載がある。  
 [イメージスキャン](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/image-scanning.html)
 
-## パッチ運用
+### パッチ運用(Protect)
 不正アクセスや不正プログラムからシステムを保護するためOSセキュリティパッチを適用する。  
 
 初めに検証環境でパッチ適用し影響を調査する。  
@@ -159,7 +170,49 @@ ECR リポジトリにプッシュされたイメージに対してスキャン�
 OS 上のパッチ適用自動設定は無効にしておく。  
 
 
-## 操作証跡
+### GuardDuty(Detect)
+GuardDuty のよって AWS 環境内のネットワークアクティビティとアカウントの動作を継続的にモニタリングし、脅威を検出する。  
+GuardDuty は CloudTrail、VPC フローログ、DNS ログを分析して継続的に驚異を検出する。  
+検出した脅威は管理者へ通知する。  
+
+GuarDuty が検出する脅威の詳細は AWS ドキュメントに記載がある。  
+[アクティブな結果タイプ](https://docs.aws.amazon.com/ja_jp/guardduty/latest/ug/guardduty_finding-types-active.html)
+
+
+### Security Hub(Detect)
+Security Hub によって AWS アカウントのセキュリティチェックを自動的に行う。  
+セキュリティチェックの結果を定期的にレビュー、または、変更の都度レビューを行い違反している項目は対策を講じる。  
+
+AWS が提供している標準のコンプライアンスコントロールを使用する。  
+提供されているルールのうち、社内セキュリティポリシーに合致しないものは無効にしておく。  
+
+#### CIS AWS Foundations
+CIS が公開している以下の基準を満たしているかをチェックする。  
+一部システマティックにチェックできない [項目](https://docs.aws.amazon.com/ja_jp/securityhub/latest/userguide/securityhub-standards-cis-checks-not-supported.html) がある。それらは人間的なチェックスを行う。  
+
+* CIS Amazon Web Services Foundations Benchmark 用の CIS Benchmark for CIS、v1.2.0、レベル 1
+* CIS Amazon Web Services Foundations Benchmark 用の CIS ベンチマーク、v1.2.0、レベル 2
+
+
+CIS AWS Foundations に含まれるチェック項目と修復方法は公式ドキュメントに記載がある。  
+[CIS AWS Foundations のコントロール](https://docs.aws.amazon.com/ja_jp/securityhub/latest/userguide/securityhub-cis-controls.html)  
+
+#### Payment Card Industry Data Security Standard (PCI DSS)
+PCI DSS 準拠のための対策ができているかをチェックする。  
+Security Hub での合格なったからといって PCI DSS 評価合格とはならないことは留意する。  
+
+PCI DSS コントロールに含まれるチェック項目と修復方法は公式ドキュメントに記載がある。  
+[PCI DSS コントロール](https://docs.aws.amazon.com/ja_jp/securityhub/latest/userguide/securityhub-pci-controls.html)
+
+
+#### AWS の基本的なセキュリティのベストプラクティス
+基本的なセキュリティ対策に対するチェックを行う。  
+
+このコントロールに含まれるチェック項目と修復方法は公式ドキュメントに記載がある。  
+[AWS の基本的なセキュリティのベストプラクティスコントロール](https://docs.aws.amazon.com/ja_jp/securityhub/latest/userguide/securityhub-standards-fsbp-controls.html)
+
+
+### 操作証跡(Investigate)
 AWS リソースに対するアクティビティと API 使用は CloudTrail で追跡する。  
 ユーザー、ロール、または AWS のサービスによって実行されたアクションは、CloudTrail にイベントとして記録される。  
 
@@ -168,7 +221,7 @@ CloudTrail の証跡情報は S3 と CloudWatch Logs へ保存する。
 ログファイルを保存する S3 バケットのサーバーアクセスログ記録を有効にし、改ざんが行われていないことを証明する。  
 
 
-## 不正と疑われる操作の通知
+#### 不正と疑われる操作の通知
 以下の操作が行われた際には、不正が疑われる操作として管理者へ通知する。  
 
 * セキュリティグループの作成、更新、削除
@@ -187,10 +240,7 @@ CloudTrail の証跡情報は S3 と CloudWatch Logs へ保存する。
 [AWS CloudFormation テンプレートを使用して CloudWatch アラームを作成する](https://docs.aws.amazon.com/ja_jp/awscloudtrail/latest/userguide/use-cloudformation-template-to-create-cloudwatch-alarms.html)  
 
 
-## 脅威検出
-GuardDuty のよって AWS 環境内のネットワークアクティビティとアカウントの動作を継続的にモニタリングし、脅威を検出する。  
-検出した脅威は管理者へ通知する。  
 
-GuarDuty が検出する脅威の詳細は AWS ドキュメントに記載がある。  
-[アクティブな結果タイプ](https://docs.aws.amazon.com/ja_jp/guardduty/latest/ug/guardduty_finding-types-active.html)
+
+
 
