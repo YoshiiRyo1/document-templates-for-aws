@@ -58,7 +58,7 @@ VPC ピアリングを大量に使用すると管理上の複雑性やパフォ�
 その場合は Transit Gateway などの代替案を検討すること。  
 
 ## 拠点との接続
-○○社オフィスや既存データセンターと AWS との接続は Direct Connect を使用する。  
+自社オフィスや既存データセンターと AWS との接続は Direct Connect を使用する。  
 複数の VPC との接続が必要な場合には Transit Gateway または Direct Connect Gateway を使用する。  
 
 拠点との接続 概要図を以下に示す。  
