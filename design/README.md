@@ -36,6 +36,8 @@ AWS Well-Architected フレームワークの内容に合致するよう記載�
 |cloud-design-patchmanagement.md|EC2 やマネージドサービスのパッチ管理について記載|
 |cloud-design-security.md|AWS セキュリティついて記載|
 |cloud-design-awsaccount.md|AWS アカウント構成について記載|
+|cloud-design-backup.md|バックアップについて記載|
+|cloud-design-naming.md|リソース命名について記載|
 
 
 ## MS Word で使いたい場合
