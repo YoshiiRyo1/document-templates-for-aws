@@ -38,6 +38,7 @@ AWS Well-Architected フレームワークの内容に合致するよう記載�
 |cloud-design-awsaccount.md|AWS アカウント構成について記載|
 |cloud-design-backup.md|バックアップについて記載|
 |cloud-design-naming.md|リソース命名について記載|
+|cloud-design-log.md|ログ管理について記載|
 
 
 ## MS Word で使いたい場合
