@@ -11,6 +11,8 @@ AWS 導入/移行プロジェクトのインフラ設計に入る前に発注元
 
 |ファイル名|内容の説明|
 |---|---|
+|workshop_multiaccount.md|AWS アカウントを複数保持する場合の戦術について記述しています|
+|workshop_network.md|AWS VPC に関する基礎知識を記述しています|
 |workshop_s3.md|Amazon S3 に関する理解を深めます|
 
 ## MS Word で使いたい場合
