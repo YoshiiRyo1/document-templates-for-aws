@@ -171,7 +171,7 @@ OS 上のパッチ適用自動設定は無効にしておく。
 
 
 ### GuardDuty(Detect)
-GuardDuty のよって AWS 環境内のネットワークアクティビティとアカウントの動作を継続的にモニタリングし、脅威を検出する。  
+GuardDuty によって AWS 環境内のネットワークアクティビティとアカウントの動作を継続的にモニタリングし、脅威を検出する。  
 GuardDuty は CloudTrail、VPC フローログ、DNS ログを分析して継続的に驚異を検出する。  
 検出した脅威は管理者へ通知する。  
 
@@ -188,7 +188,7 @@ AWS が提供している標準のコンプライアンスコントロールを�
 
 #### CIS AWS Foundations
 CIS が公開している以下の基準を満たしているかをチェックする。  
-一部システマティックにチェックできない [項目](https://docs.aws.amazon.com/ja_jp/securityhub/latest/userguide/securityhub-standards-cis-checks-not-supported.html) がある。それらは人間的なチェックスを行う。  
+一部システマティックにチェックできない [項目](https://docs.aws.amazon.com/ja_jp/securityhub/latest/userguide/securityhub-standards-cis-checks-not-supported.html) がある。それらは人間的なチェックを行う。  
 
 * CIS Amazon Web Services Foundations Benchmark 用の CIS Benchmark for CIS、v1.2.0、レベル 1
 * CIS Amazon Web Services Foundations Benchmark 用の CIS ベンチマーク、v1.2.0、レベル 2
@@ -199,7 +199,7 @@ CIS AWS Foundations に含まれるチェック項目と修復方法は公式ド
 
 #### Payment Card Industry Data Security Standard (PCI DSS)
 PCI DSS 準拠のための対策ができているかをチェックする。  
-Security Hub での合格なったからといって PCI DSS 評価合格とはならないことは留意する。  
+Security Hub で合格になったからといって PCI DSS 評価の合格とはならないことは留意する。  
 
 PCI DSS コントロールに含まれるチェック項目と修復方法は公式ドキュメントに記載がある。  
 [PCI DSS コントロール](https://docs.aws.amazon.com/ja_jp/securityhub/latest/userguide/securityhub-pci-controls.html)
@@ -217,7 +217,7 @@ AWS リソースに対するアクティビティと API 使用は CloudTrail �
 ユーザー、ロール、または AWS のサービスによって実行されたアクションは、CloudTrail にイベントとして記録される。  
 
 CloudTrail の証跡情報は S3 と CloudWatch Logs へ保存する。  
-3 へ保存する際にログファイルの検証を有効にし、かつ、  
+S3 へ保存する際にログファイルの検証を有効にし、かつ、  
 ログファイルを保存する S3 バケットのサーバーアクセスログ記録を有効にし、改ざんが行われていないことを証明する。  
 
 
