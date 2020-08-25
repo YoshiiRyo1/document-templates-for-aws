@@ -36,7 +36,7 @@
 
 |AWSリソース|命名規則|備考|
 |---|---|---|
-|VPC|{sysname}-{env}-vpc||
+|VPC|{sysname}-{env}-vpc| |
 |Subnet|{sysname}-{env}-{nlayer}-subnetXX|XXは連番、AZ毎に分ける|
 |RouteTable|{sysname}-{env}-{nlayer}-rtb|NatGawatayをAZ毎に分ける場合はprotectedのみ連番を付与|
 |InternetGateway|{sysname}-{env}-igw||
@@ -73,7 +73,7 @@ S3 バケット名称を決定する際は以下に留意する。
 |Environment|環境名 (prod/stg/dev など) |
 |SystemName|システムを識別可能な文字列|
 |ApplicationID|稼働しているアプリケーションを識別する文字列|
-|ApplicationRole|アプリケーション機能 (Web/DB/batch など)
+|ApplicationRole|アプリケーション機能 (Web/DB/batch など)|
 
 ## Automation
 何らかのオペレーションを自動化している場合はタグを活用して対象システムやタスク実行時間を記述する。  
