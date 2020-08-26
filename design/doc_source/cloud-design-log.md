@@ -91,3 +91,17 @@ CloudWatch Agent を使用して OS 上のログファイルを CloudWatch Logs 
 * 長期保管が可能になる
 * 複数のインスタンスのログをグループ化することで検索/分析が効果的に行える
 
+## Aurora PostgreSQL 
+Aurora ログは CloudWatch Logs へ集約する。
+Aurora PostgreSQL ではクエリ、エラー、および、監査ログが生成される。
+
+取得するログと PostgreSQL のパラメータは以下の通り。
+
+|パラメータ|値|意味|
+|---|---|---|
+|log_statement|all|all → 全てのステートメント、ddl → DDL、mod → DML、none → なし|
+|log_min_duration_statement|1000|ミリ秒、設定した時間より長く実行されたステートメントがログの対象。|
+|log_min_error_statement|ERROR|ログに出力するコンディション。DEBUG5, DEBUG4, DEBUG3, DEBUG2, DEBUG1, INFO, NOTICE, WARNING, ERROR, LOG, FATAL, and PANIC|
+|pgaudit.log|all|監査対象のステートメント。ddl, function, misc, read, role, write, none, all, -ddl, -function, -misc, -read, -role, -write|
+|pgaudit.role|rds_pgaudit|この値に固定。|
+|shared_preload_libraries|pgaudit|この値に固定。|
