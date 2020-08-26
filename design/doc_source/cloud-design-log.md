@@ -79,6 +79,12 @@ Athena を使用して AWS WAF トラフィックログをクエリする。
 
 ## EC2 
 CloudWatch Agent を使用して OS 上のログファイルを CloudWatch Logs へ集約する。  
+集約対象ログは以下の通り。
+
+|サーバー名|ログ種別|ファイルパス|
+|---|---|---|
+|APサーバー|セキュリティログ|/var/log/secure|
+|APサーバー|システムログ|/var/log/messages|
 
 #### CloudWatch Logs へ集約することの意味
 
