@@ -104,6 +104,12 @@ GitHub、EC2 上、AMI 上、プロジェクトで作成したドキュメント
 |AWS リソース|AWS 外リソース|暗号化を実施、外部システムの都合により暗号化できない場合は個別に対策をとる|
 |AWS 外リソース|AWS リソース|暗号化を実施、外部システムの都合により暗号化できない場合は個別に対策をとる|
 
+#### ALB HTTPS Listener セキュリティポリシー
+セキュリティポリシーはフロントエンド接続に使用されるプロトコルと暗号の組み合わせ。
+本プロジェクトでは最新の組み合わせを採用する。
+
+サポートされているプロトコルと暗号のリストは AWS 公式を参照。  
+[セキュリティポリシー](https://docs.aws.amazon.com/ja_jp/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies)
 
 ### 保管データの暗号化
 AWS リソース上に保管するデータは常に暗号化を行う。  
