@@ -21,13 +21,13 @@ S3 のログ記録は以下の2通りある。
 サーバーアクセスログ取得の有効化はバケット(ソースバケット)ごとに指定する。  
 有効にした際にキープレフィックスを指定可能。キープレフィックスは分類を容易にするためソースバケット名とする。  
 
-サーバーサクセスログ保管用のバケット(ターゲットバケット)を作成し、サーバーサクセスログはここに集約する。  
+サーバーアクセスログ保管用のバケット(ターゲットバケット)を作成し、サーバーアクセスログはここに集約する。  
 ソースバケットとターゲットバケットの両方を同じ AWS アカウントが所有すること、さらに両方のバケットが同じリージョンにあることが必要。  
 
 アクセスログのフォーマットは公式ドキュメントに記述がある。  
 [Amazon S3 サーバーアクセスログの形式](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/dev/LogFormat.html)  
 
-### サーバーサクセスログのクエリ
+### サーバーアクセスログのクエリ
 Athena を使用してサーバーアクセスログをクエリする。  
 クエリ方法、サンプルは公式ドキュメントに記述がある。  
 [Amazon Athena を使用した Amazon S3 アクセスログでのリクエストのクエリ](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/dev/using-s3-access-logs-to-identify-requests.html#querying-s3-access-logs-for-requests)  
@@ -75,4 +75,13 @@ WebACL に関する詳細情報を取得する。
 Athena を使用して AWS WAF トラフィックログをクエリする。  
 クエリ方法、サンプルは公式ドキュメントに記述がある。  
 [AWS WAF ログのクエリ](https://docs.aws.amazon.com/ja_jp/athena/latest/ug/waf-logs.html)
+
+
+## EC2 
+CloudWatch Agent を使用して OS 上のログファイルを CloudWatch Logs へ集約する。  
+
+#### CloudWatch Logs へ集約することの意味
+
+* 長期保管が可能になる
+* 複数のインスタンスのログをグループ化することで検索/分析が効果的に行える
 
