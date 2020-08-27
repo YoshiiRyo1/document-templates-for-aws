@@ -72,23 +72,50 @@ AWS 内部障害を疑う場合には Personal Health Dashboard を確認する�
 * 各種ログからキーワードフィルターによる検知
 * AWS メンテナンス
 
+### 通知方法
+イベントはメールで通知する。
+イベント発行元 ～ EventBridge ～ SNS ～ メール という流れで通知を行う。
+
+イベントは Notice と AR (Action Required)  に分類してメール送信する。
+フィルタリングを容易にするため件名に分類を付与する。
+
+|イベント|件名に付与する接頭語|送信先メールアドレス|
+|---|---|---|
+|Notice|Notice-| |
+|AR|AR-| |
+
 ### AWS リソースのステータス変化
 CloudWatch で AWS リソースのステータス状態の変化を監視する。  
 EC2インスタンスの場合、StatusCheckFailed等のステータスメトリクスでEC2インスタンスの正常性を監視。  
 
+|リソース|メトリクス|説明|しきい値|イベント分類|
+|---|---|---|---|
+|EC2|StatusCheckFailed_Instance|インスタンスのソフトウェア、ネットワーク起因によるダウンを検知|2分連続 2回|AR|
+|EC2|StatusCheckFailed_System|AWS 内部のハードウェア障害によるダウンを検知|2分連続 2回|AR|
+
 ### サーバープロセスのダウン
 CloudWatch Agent でサーバープロセス数をカウントしておき 0 になったらイベントにする。  
+
+|リソース|メトリクス|説明|しきい値|イベント分類|
+|---|---|---|---|
+|プロセス名|カスタムメトリクス|サーバープロセスのダウン|3分連続 0|AR|
+
 
 ### リクエスト数、トランザクション数の減少や増加
 リクエストやトランザクションが一定数発生している状態を正常とし、これらの極端や減少や増加をイベントとする。  
 CloudWatch メトリクスから以下の値を取得する。  
 
-|リソース|メトリクス例|
-|---|---|
-|S3|AllRequests,GetRequests,PutRequests|
-|ALB|ActiveConnectionCount,RejectedConnectionCount,NewConnectionCount|
-|RDS|DatabaseConnections,NetworkReceiveThroughput,NetworkTransmitThroughput,ReadIOPS,WriteIOPS|
-|DynamoDB|ConsumedReadCapacityUnits,ConsumedWriteCapacityUnits|
+|リソース|メトリクス|説明|しきい値|イベント分類|
+|---|---|---|---|
+|ALB|ActiveConnectionCount|クライアントからのアクティブ接続数|60分連続で 0|AR|
+|ALB|NewConnectionCount|クライアントからの新規接続数|180分連続で 0|AR|
+|ALB|RejectedConnectionCount|接続可能な接続数を超えたリジェクト数|5分で 1 以上|AR|
+|RDS|DatabaseConnection|DB コネクション数|10分連続で 0|AR|
+|RDS|NetworkReceiveThroughput|DB クラスターが各クライアントから受信したネットワークスループットの量 |10分連続で 0|AR|
+|RDS|NetworkTransmitThroughput|DB クラスターが各クライアントに対し送信したネットワークスループットの量 |10分連続で 0|AR|
+|RDS|ReadIOPS|1 秒あたりのディスク I/O 操作の平均回数|10分連続で 0|AR|
+|RDS|WriteIOPS|1 秒あたりのディスク I/O 操作の平均回数|10分連続で 0|AR|
+
 
 ### 外形監視によるヘルスチェック
 サービスのエンドポイントに対して HTTP/HTTPS リクエストを行いステータスを確認する。  
@@ -101,8 +128,20 @@ Error や Warning などの単語検知ではなく、具体的なイベント�
 
 CloudWatch Logs にログを出力する際には、検索性を向上されるため JSON 形式での出力を検討する。  
 
-### AWS メンテナンス
+|対象ログ|検出文字列|説明|しきい値|イベント分類|
+|---|---|---|---|
+|xxx| { $.eventType = "UpdateTrail" } |xxxアプリケーションの実行エラー|発生都度|Notice|
 
+### AWS メンテナンス
+Health イベントを取得して AWS メンテナンスを通知する。
+対象は本プロジェクトで使用している全サービスの全イベントとする。
+
+|対象ログ|イベントタイプ|説明|しきい値|イベント分類|
+|---|---|---|---|
+|EC2|全てのイベント|EC2 の Health イベント|発生都度|Notice|
+|ELB|全てのイベント|ELB の Health イベント|発生都度|Notice|
+|CloudFront|全てのイベント|CloudFront の Health イベント|発生都度|Notice|
+|Route 53|全てのイベント|Route 53 の Health イベント|発生都度|Notice|
 
 
 ## 死活監視
