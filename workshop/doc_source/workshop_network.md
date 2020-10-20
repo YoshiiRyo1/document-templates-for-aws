@@ -81,7 +81,7 @@ AWS 上のサブネットを作成する基準は後述するルートテーブ�
 Network ACL はサブネット、セキュリティグループはインスタンスと考えて頂けると理解が容易だと思います。  
 
 ルール番号、送信元または送信先、プロトコル、ポートの範囲、拒否または許可を組み合わせてルールを作成します。  
-ルール番号の低い順から評価をしていきます。  
+ルール番号の低い順から評価をします。  
 
 Network ACL はステートレスです。  
 受信、送信とも明示的に許可または拒否をする必要があります。  
@@ -148,7 +148,8 @@ AWS は Amazon Time Sync Service という時刻同期サービスを提供し�
 
 
 ## ハイブリットネットワーク
-拠点・データセンター ～ AWS 間、AWS ～ AWS 間を接続するハイブリットネットワークについて記述します。  
+拠点・データセンター ～ AWS 間、AWS ～ AWS 間、他クラウド ～ AWS 間を接続するハイブリットネットワークについて記述します。  
+ハイブリットネットワークを採用する場合、接続元と VPC の CIDR ブロックは重複できません。その前提で設計をお願いします。  
 
 ### Direct Connect
 拠点やデータセンターから AWS の間を高品質・低レイテンシの専用線で接続するサービスです。  
@@ -174,7 +175,7 @@ Direct Connect パートナーから仮想的な接続が提供されます。
 Direct Connect 接続を開始するために仮想インターフェイス (VIF) を作成します。  
 
 ##### プライベート仮想インターフェイス
-プライベート IP アドレスを使って Amazon VPC にアクセスするために使用します。  
+プライベート IP アドレスを使って Amazon VPC へアクセスするために使用します。  
 もっとも多いパターンです。  
 
 ##### パブリック仮想インターフェイス
@@ -185,12 +186,46 @@ S3 や Connect などの Private Link を持たないサービスに閉域で接
 後述する Direct Connect Gateway と Trangit Gateway の組み合わせで利用します。  
 
 ### Direct Connect Gateway
+グローバルな Direct Connect 用のゲートウェイです。  
+あるリージョンで Direct Connect を開設し、それを Direct Connect Gateway に関連付けると拠点から他リージョンへアクセスすることが可能になります。  
+
+![Direct Connet Gateway](https://docs.aws.amazon.com/ja_jp/directconnect/latest/UserGuide/images/dx-gateway.png)  
+*https://docs.aws.amazon.com/ja_jp/directconnect/latest/UserGuide/direct-connect-gateways-intro.html より引用*
+
+Direct Connect Gateway を経由した VPC 間通信ができないのでご注意ください。  
+上の例だと、US West ～ US East 間の VPC 通信にあたります。(VPC Peering や Trangit Gateway を検討します)  
 
 ### Site-to-Site VPN
+オンプレミスまたは他クラウドと VPC を VPN で接続するサービスです。  
+AWS が接続される側になります。オンプレミスまたは他クラウドのルーター機器はお客様でご用意いただく必要があります。    
+
+Virtual Private Gateway に接続するパターンと Trangit Gateway に接続するパターンがあります。  
+複数の VPC を接続した場合は Transit Gateway を選択します。  
+
+![Site-to-Site VPN](https://docs.aws.amazon.com/ja_jp/vpn/latest/s2svpn/images/Branch_Offices_diagram.png)  
+
+![Site-to-Site VPN](https://docs.aws.amazon.com/ja_jp/vpn/latest/s2svpn/images/branch-off-transit-gateway.png)  
+*https://docs.aws.amazon.com/ja_jp/vpn/latest/s2svpn/Examples.html より引用*
+
 
 ### Trangit Gateway
+オンプレミス ～ VPC、VPC ～ VPC 間接続の中央ハブ、クラウドルーターとして機能するサービスです。  
 
+Transit Gateway 登場以前は、オンプレミス拠点数 ✕ VPC 数  の接続をメッシュ型で行っていました。  
+Transit Gateway によって集中管理を行うことでハイブリットネットワーク管理上の手間削減が可能です。  
 
+**AWS Transit Gateway を使用しない場合**  
+![AWS Transit Gateway を使用しない場合](https://d1.awsstatic.com/product-marketing/transit-gateway/tgw-before.7f287b3bf00bbc4fbdeadef3c8d5910374aec963.png)  
 
+**AWS Transit Gateway を使用した場合**  
+![AWS Transit Gateway を使用した場合](https://d1.awsstatic.com/product-marketing/transit-gateway/tgw-after.d85d3e2cb67fd2ed1a3be645d443e9f5910409fd.png)  
+
+#### ルートの制御
+Transit Gateway でルートテーブルを制御できます。  
+例えば、ある拠点からは特定の VPC しかアクセスさせない、VPC-A と VPC-B は通信可能だが VPC-C は通信不可、といったことが可能です。  
+
+### 参考
+[顧客拠点から Amazon VPCへの接続パターンまとめ (Whitepaper参照）](https://dev.classmethod.jp/articles/whitepaper-translate-jpn-vpc-connectivity-options-01/)  
+[Amazon VPC同士の接続パターンまとめ (Whitepaper参照）](https://dev.classmethod.jp/articles/whitepaper-vpc-conectivity-options-02/)
 
 
