@@ -639,7 +639,7 @@ EC2 が正常に動作していれば対応は不要。
 #### アラート例
 
 ```
-CloudWatch Alarm | recover-ec2-anywhere-dev-batch | ap-northeast-1 | Account: nnnnnnnnnnnn
+CloudWatch Alarm | recover-ec2-dev-batch | ap-northeast-1 | Account: nnnnnnnnnnnn
 Threshold Crossed: 2 datapoints [1.0 (29/01/21 05:16:00), 1.0 (29/01/21 05:15:00)] were greater than the threshold (0.0).
 Alarm State
 ALARM
