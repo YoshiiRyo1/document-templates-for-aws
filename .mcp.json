@@ -1,0 +1,21 @@
+{
+    "mcpServers": {
+        "aws-knowledge": {
+            "command": "uvx",
+            "args": [
+                "fastmcp",
+                "run",
+                "https://knowledge-mcp.global.api.aws"
+            ]
+        },
+        "document-loader": {
+            "command": "uvx",
+            "args": [
+                "awslabs.document-loader-mcp-server@latest"
+            ],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            }
+        }
+    }
+}
