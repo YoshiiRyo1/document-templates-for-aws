@@ -9,7 +9,8 @@
             "WebSearch",
             "WebFetch",
             "Write",
-            "mcp__aws-knowledge"
+            "mcp__aws-knowledge",
+            "mcp__document-loader"
         ],
         "deny": [
             "Bash(rm -rf /:*)",
@@ -25,7 +26,8 @@
     },
     "enableAllProjectMcpServers": true,
     "enabledMcpjsonServers": [
-        "aws-knowledge"
+        "aws-knowledge",
+        "document-loader"
     ],
     "language": "japanese",
     "awsAuthRefresh": "aws sso login --profile your-profile-here",
