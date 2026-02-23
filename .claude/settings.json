@@ -1,0 +1,30 @@
+{
+    "permissions": {
+        "allow": [
+            "Bash",
+            "Edit",
+            "Read",
+            "Task",
+            "WebSearch",
+            "WebFetch",
+            "Write",
+            "mcp__aws-knowledge"
+        ],
+        "deny": [
+            "Bash(rm -rf /:*)",
+            "Bash(sudo:*)",
+            "Bash(shutdown:*)",
+            "Bash(reboot:*)"
+        ],
+        "ask": [
+            "Bash(curl:*)",
+            "Bash(rm:*)",
+            "Bash(wget:*)"
+        ]
+    },
+    "enableAllProjectMcpServers": true,
+    "enabledMcpjsonServers": [
+        "aws-knowledge"
+    ],
+    "language": "japanese"
+}
