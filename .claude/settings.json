@@ -4,6 +4,7 @@
             "Bash",
             "Edit",
             "Read",
+            "Skill",
             "Task",
             "WebSearch",
             "WebFetch",
@@ -26,5 +27,9 @@
     "enabledMcpjsonServers": [
         "aws-knowledge"
     ],
-    "language": "japanese"
+    "language": "japanese",
+    "awsAuthRefresh": "aws sso login --profile your-profile-here",
+    "env": {
+        "AWS_PROFILE": "your-profile-here"
+    }
 }
