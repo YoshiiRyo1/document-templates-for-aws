@@ -34,6 +34,7 @@
 | ログ分析の必要はありますでしょうか？<br />どのログをどの粒度で分析するか定義されていますでしょうか？                                                                                                                                                                                                                                                                                    | Athena、CloudWatch Logs Insights、QuickSight、OpenSearch Service、3rd party tool などの選択肢がある。<br />セキュリティ系ログは Security Lake（OCSF 形式）に集約し Athena や OpenSearch で分析できる。 |        |
 | ログの集約・正規化の方針はありますか？ | Security Lake で AWS サービスログを OCSF（Open Cybersecurity Schema Framework）形式に正規化し一元管理できる。<br />正規化により異なるソースのログを横断的に分析可能になる。 |        |
 | マルチアカウント構成の場合、ログの集約先は決まっていますか？ | 専用のログ集約アカウントに CloudTrail、Config、VPC Flow Logs 等を集約することを推奨する。<br />Organizations の委任管理者機能でセキュリティサービスのログ集約を一元化できる。 |        |
+| アクティビティログの長期保管・分析の要件はありますか？ | CloudTrail Lake でアクティビティログを最大 7 年間保管し、SQL クエリで分析できる。<br />AI パワードの Highlights ダッシュボードと 14 種のプリビルトダッシュボードで異常なアクティビティを自動検出する。<br />クロスアカウントデータアクセスで組織全体のログを横断分析できる。<br />データイベント集約（2025年〜）で大量 API アクティビティを 5 分間隔のサマリーに集約し、異常パターンを自動検出する。 |        |
 
 ## 監視・オブザーバビリティ
 
@@ -52,7 +53,10 @@
 | アラート重要度に応じて通知先を定義していますか？                                                                                                                         | 緊急は電話、参考情報はメールなど。                                                                                                                                                                      |        |
 | メトリクス・ログ・トレースを統合的に管理する方針はありますか？ | オブザーバビリティの3本柱（メトリクス、ログ、トレース）を CloudWatch、X-Ray で統合管理できる。<br />CloudWatch Container Insights、Lambda Insights で各コンピュート環境のオブザーバビリティを強化する。<br />CloudTrail、VPC Flow Logs、Route 53 DNS ログ、WAF ログを OCSF 形式で CloudWatch に統合集約できる。 |        |
 | エンドユーザーの体験を監視する仕組みは必要ですか？ | Amazon CloudWatch Internet Monitor でインターネット経由のパフォーマンスや可用性を監視できる。<br />CloudWatch Synthetics でユーザーシナリオを模した外形監視を自動実行できる。 |        |
-| インシデント発生時の対応フローは定義されていますか？ | AWS Systems Manager Incident Manager でインシデントの検知・エスカレーション・対応・振り返りを一元管理できる。<br />オンコール体制、エスカレーションパス、コミュニケーション手段を定義する。 |        |
+| インシデント発生時の対応フローは定義されていますか？ | CloudWatch Investigations で AI パワードの根本原因分析と「5 Whys」分析を自動生成できる。インタラクティブなインシデントレポート生成で振り返りを効率化する。<br />オンコール体制、エスカレーションパス、コミュニケーション手段を定義する。<br />PagerDuty、Datadog 等の 3rd Party インシデント管理ツールとの統合も検討する。 |        |
+| データベースのオブザーバビリティ要件はありますか？ | CloudWatch Database Insights で Aurora / RDS のフリート全体の健全性を統合監視できる。<br />プリビルトダッシュボード、推奨アラーム、SQL クエリ分析を提供する。<br />Application Signals と連携してアプリケーション性能とデータベース性能を相関分析し、ボトルネックを迅速に特定できる。<br />クロスアカウント・クロスリージョン監視にも対応。 |        |
+| SLO（サービスレベル目標）と SLI（サービスレベル指標）は定義されていますか？ | CloudWatch Application Signals で SLO を定義し、SLI（可用性、レイテンシ等）を自動計測できる。<br />SLO のバーンレートに基づくアラートで問題を早期に検知する。<br />SLO ダッシュボードでエラーバジェットの消費状況を追跡できる。<br />GitHub Actions 統合で CI/CD パイプラインにオブザーバビリティを組み込める。 |        |
+| サードパーティまたは OSS ベースのオブザーバビリティツールの利用要件はありますか？ | Amazon Managed Grafana で Grafana ダッシュボード・アラートをフルマネージドで運用できる。<br />Amazon Managed Service for Prometheus で Prometheus 互換のメトリクス収集・クエリを利用できる。<br />OpenTelemetry ベースの計装と組み合わせてベンダーロックインを回避できる。<br />既存の Grafana / Prometheus 資産をそのまま活用可能。 |        |
 
 ## アプリケーションデプロイ
 

@@ -26,12 +26,13 @@ AWS Well-Architected フレームワークの内容に合致するよう記載�
 
 | ファイル名 | 内容の説明 | 質問数 |
 | --- | --- | --- |
-| nfr-reliability.md | 信頼性（稼働率、バックアップ、災害対策） | 21 |
-| nfr-security.md | セキュリティ（コンプライアンス、データ保護、ID管理、攻撃防御、パッチ管理） | 41 |
-| nfr-operational-excellence.md | 運用上の優秀性（運用体制、ジョブ、ログ、監視、デプロイ） | 44 |
-| nfr-performance-efficiency.md | パフォーマンス効率（性能目標、拡張性、キャッシュ、テスト） | 21 |
-| nfr-cost-optimization.md | コスト最適化 | 12 |
+| nfr-reliability.md | 信頼性（稼働率、バックアップ、災害対策） | 23 |
+| nfr-security.md | セキュリティ（コンプライアンス、データ保護、ID管理、攻撃防御、パッチ管理） | 45 |
+| nfr-operational-excellence.md | 運用上の優秀性（運用体制、ジョブ、ログ、監視、デプロイ） | 45 |
+| nfr-performance-efficiency.md | パフォーマンス効率（性能目標、拡張性、キャッシュ、テスト） | 22 |
+| nfr-cost-optimization.md | コスト最適化 | 13 |
 | nfr-sustainability.md | サステナビリティ | 5 |
-| nfr-infrastructure.md | 環境（AWSアカウント、ネットワーク、ドメイン、ライセンス） | 18 |
-| nfr-migration.md | マイグレーション | 12 |
+| nfr-infrastructure.md | 環境（AWSアカウント、ネットワーク、ドメイン、ライセンス） | 19 |
+| nfr-migration.md | マイグレーション | 14 |
+| nfr-generative-ai.md | 生成 AI（ガバナンス、セキュリティ、運用、パフォーマンス、コスト） | 7 |
 
